@@ -57,3 +57,12 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Node.js (Worker)
+worker/node_modules/
+worker/dist/
+worker/.wrangler/
+worker/package-lock.json
+
+# Cloudflare
+.dev.vars

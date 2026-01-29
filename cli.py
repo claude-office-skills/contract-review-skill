@@ -333,7 +333,7 @@ def info():
         "  compare       - Compare two contracts\n"
         "  export        - Export to MD/DOCX\n"
         "  jurisdictions - List legal knowledge bases\n\n"
-        "[dim]https://github.com/lijie420461340/contract-review-skill[/dim]",
+        "[dim]https://github.com/claude-office-skills/contract-review-skill[/dim]",
         title="Info"
     ))
 

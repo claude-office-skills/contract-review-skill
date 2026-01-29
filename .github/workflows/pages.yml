@@ -1,0 +1,32 @@
+name: Deploy Demo to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'demo/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy Pages
+    
+    permissions:
+      contents: read
+      deployments: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: contract-review-demo
+          directory: demo
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

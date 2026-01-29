@@ -61,4 +61,4 @@ python cli.py compare contract_a.pdf contract_b.pdf
 
 ## Author
 
-Built with Claude by lijie420461340
+Built with Claude

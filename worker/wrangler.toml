@@ -1,0 +1,16 @@
+name = "contract-review-skill"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# Development settings
+[dev]
+port = 8787
+local_protocol = "http"
+
+# Environment variables
+[vars]
+ENVIRONMENT = "production"
+
+# No API key required!
+# This worker provides MCP tools only.
+# AI analysis is done client-side by Claude Desktop/Cursor.
