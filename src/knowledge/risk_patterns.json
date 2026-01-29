@@ -1,0 +1,153 @@
+{
+  "version": "1.0.0",
+  "description": "Common contract risk patterns for automated detection",
+  "patterns": [
+    {
+      "id": "unlimited_liability",
+      "name": "Unlimited Liability / 无限责任",
+      "severity": "high",
+      "description": "No cap on liability or indemnification obligations",
+      "keywords": ["无限责任", "全部责任", "unlimited liability", "full indemnification"],
+      "recommendation": "Add liability cap (e.g., 12 months of fees or contract value)"
+    },
+    {
+      "id": "broad_ip_assignment",
+      "name": "Broad IP Assignment / 宽泛知识产权转让",
+      "severity": "high",
+      "description": "Assigns all intellectual property including pre-existing IP",
+      "keywords": ["全部知识产权", "所有权利", "all intellectual property", "work product"],
+      "recommendation": "Exclude pre-existing IP; define scope of assignment clearly"
+    },
+    {
+      "id": "unilateral_termination",
+      "name": "Unilateral Termination / 单方解约权",
+      "severity": "high",
+      "description": "One party can terminate without cause or with very short notice",
+      "keywords": ["单方解除", "随时终止", "unilateral termination", "at will"],
+      "recommendation": "Require mutual termination rights or reasonable notice period"
+    },
+    {
+      "id": "auto_renewal",
+      "name": "Auto-Renewal Trap / 自动续约陷阱",
+      "severity": "medium",
+      "description": "Contract auto-renews with difficult opt-out process",
+      "keywords": ["自动续约", "自动续期", "auto-renewal", "automatically renew"],
+      "recommendation": "Add clear opt-out mechanism with reasonable notice period"
+    },
+    {
+      "id": "one_sided_indemnity",
+      "name": "One-Sided Indemnification / 单向赔偿",
+      "severity": "high",
+      "description": "Only one party bears indemnification obligations",
+      "keywords": ["单方赔偿", "甲方不承担", "乙方承担全部"],
+      "recommendation": "Negotiate mutual indemnification or limit scope"
+    },
+    {
+      "id": "penalty_clause",
+      "name": "Excessive Penalty / 过高违约金",
+      "severity": "medium",
+      "description": "Penalty clause that exceeds reasonable damages",
+      "keywords": ["违约金", "罚款", "penalty", "liquidated damages"],
+      "recommendation": "Ensure penalty is proportionate to actual potential damages"
+    },
+    {
+      "id": "non_compete_broad",
+      "name": "Broad Non-Compete / 宽泛竞业限制",
+      "severity": "medium",
+      "description": "Non-compete clause with excessive scope, duration, or geography",
+      "keywords": ["竞业限制", "竞业禁止", "non-compete", "non-competition"],
+      "recommendation": "Limit scope, duration (2 years max), and geographic area"
+    },
+    {
+      "id": "confidentiality_perpetual",
+      "name": "Perpetual Confidentiality / 永久保密",
+      "severity": "medium",
+      "description": "Confidentiality obligations that never expire",
+      "keywords": ["永久保密", "永远", "perpetual", "indefinite confidentiality"],
+      "recommendation": "Set reasonable time limit (3-5 years typical)"
+    },
+    {
+      "id": "exclusive_jurisdiction",
+      "name": "Unfavorable Jurisdiction / 不利管辖",
+      "severity": "medium",
+      "description": "Dispute resolution in unfavorable or distant jurisdiction",
+      "keywords": ["管辖", "仲裁地", "jurisdiction", "arbitration venue"],
+      "recommendation": "Negotiate neutral venue or your local jurisdiction"
+    },
+    {
+      "id": "waiver_of_rights",
+      "name": "Broad Rights Waiver / 宽泛权利放弃",
+      "severity": "high",
+      "description": "Waiver of statutory or fundamental rights",
+      "keywords": ["放弃权利", "不得主张", "waive", "waiver of rights"],
+      "recommendation": "Remove or limit scope of waiver"
+    },
+    {
+      "id": "change_of_scope",
+      "name": "Uncontrolled Scope Changes / 范围变更无控制",
+      "severity": "medium",
+      "description": "No process for managing scope or specification changes",
+      "keywords": ["变更", "修改范围", "change order", "scope change"],
+      "recommendation": "Add change management process with pricing mechanism"
+    },
+    {
+      "id": "payment_terms_unfavorable",
+      "name": "Unfavorable Payment Terms / 不利付款条款",
+      "severity": "medium",
+      "description": "Long payment cycles or payment contingent on subjective criteria",
+      "keywords": ["付款", "结算", "payment terms", "net 90"],
+      "recommendation": "Negotiate shorter payment cycles and objective acceptance criteria"
+    },
+    {
+      "id": "audit_rights_missing",
+      "name": "Missing Audit Rights / 缺少审计权",
+      "severity": "low",
+      "description": "No right to audit supplier compliance or financials",
+      "keywords": ["审计", "检查权", "audit rights", "inspection"],
+      "recommendation": "Add reasonable audit rights clause"
+    },
+    {
+      "id": "force_majeure_missing",
+      "name": "Missing Force Majeure / 缺少不可抗力条款",
+      "severity": "medium",
+      "description": "No provision for unforeseeable circumstances",
+      "keywords": ["不可抗力", "force majeure"],
+      "recommendation": "Add standard force majeure clause"
+    },
+    {
+      "id": "data_protection_missing",
+      "name": "Missing Data Protection / 缺少数据保护条款",
+      "severity": "high",
+      "description": "No provisions for personal data handling (GDPR, PIPL compliance)",
+      "keywords": ["个人信息", "数据保护", "personal data", "GDPR", "privacy"],
+      "recommendation": "Add data protection clause compliant with applicable laws"
+    }
+  ],
+  "contract_types": {
+    "service_agreement": {
+      "name_cn": "服务协议",
+      "name_en": "Service Agreement",
+      "key_clauses": ["服务范围", "服务标准", "付款", "知识产权", "保密"]
+    },
+    "employment_contract": {
+      "name_cn": "劳动合同",
+      "name_en": "Employment Contract",
+      "key_clauses": ["工作内容", "薪酬福利", "工作时间", "竞业限制", "解除条件"]
+    },
+    "nda": {
+      "name_cn": "保密协议",
+      "name_en": "Non-Disclosure Agreement",
+      "key_clauses": ["保密信息定义", "保密期限", "例外情况", "返还义务"]
+    },
+    "procurement": {
+      "name_cn": "采购合同",
+      "name_en": "Procurement Contract",
+      "key_clauses": ["产品规格", "交付", "验收", "质保", "付款"]
+    },
+    "lease": {
+      "name_cn": "租赁合同",
+      "name_en": "Lease Agreement",
+      "key_clauses": ["租赁物", "租金", "期限", "维护责任", "解约条件"]
+    }
+  }
+}
