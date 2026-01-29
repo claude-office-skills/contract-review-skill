@@ -142,51 +142,53 @@ def check_completeness(
     
     pdf_data = encode_pdf(pdf_path)
     
-    prompt = """请检查这份合同的完整性，重点关注以下方面：
+    prompt = """Check the completeness of this contract, focusing on the following aspects:
 
-1. **签名检查**
-   - 甲方签名是否存在
-   - 乙方签名是否存在
-   - 签名位置是否正确
+1. **Signature Check**
+   - Is Party A's signature present?
+   - Is Party B's signature present?
+   - Are signatures in the correct location?
 
-2. **公章检查**
-   - 甲方公章是否存在
-   - 乙方公章是否存在
-   - 公章是否清晰可辨
+2. **Stamp/Seal Check** (for contracts requiring official seals)
+   - Is Party A's stamp/seal present?
+   - Is Party B's stamp/seal present?
+   - Are stamps clear and legible?
 
-3. **日期检查**
-   - 签署日期是否填写
-   - 生效日期是否明确
-   - 日期格式是否规范
+3. **Date Check**
+   - Is the signing date filled in?
+   - Is the effective date specified?
+   - Is the date format correct?
 
-4. **其他要素**
-   - 合同编号是否存在
-   - 页码是否完整
-   - 骑缝章（如有多页）
+4. **Other Elements**
+   - Is the contract number present?
+   - Are page numbers complete?
+   - Are there binding seals (for multi-page documents)?
 
-请以 JSON 格式输出检查结果：
+Output the results in JSON format:
 ```json
 {
   "signatures": {
-    "party_a": {"present": bool, "location": "描述"},
-    "party_b": {"present": bool, "location": "描述"}
+    "party_a": {"present": bool, "location": "description"},
+    "party_b": {"present": bool, "location": "description"}
   },
   "stamps": {
     "party_a": {"present": bool, "clear": bool},
     "party_b": {"present": bool, "clear": bool}
   },
   "dates": {
-    "signing_date": {"present": bool, "value": "日期或null"},
-    "effective_date": {"present": bool, "value": "日期或null"}
+    "signing_date": {"present": bool, "value": "date or null"},
+    "effective_date": {"present": bool, "value": "date or null"}
   },
   "other": {
-    "contract_number": {"present": bool, "value": "编号或null"},
+    "contract_number": {"present": bool, "value": "number or null"},
     "page_numbers": {"present": bool, "complete": bool}
   },
-  "overall_completeness": "完整/部分完整/不完整",
-  "issues": ["问题1", "问题2"]
+  "overall_completeness": "complete/partial/incomplete",
+  "issues": ["issue1", "issue2"]
 }
 ```
+
+IMPORTANT: Respond in the same language as the contract document.
 """
     
     response = client.messages.create(
@@ -246,31 +248,33 @@ def compare_contracts(
     pdf_data_a = encode_pdf(pdf_path_a)
     pdf_data_b = encode_pdf(pdf_path_b)
     
-    prompt = """请对比这两份合同，分析它们的差异：
+    prompt = """Compare these two contracts and analyze their differences:
 
-## 对比维度
+## Comparison Dimensions
 
-1. **基本信息差异**
-   - 合同类型
-   - 当事人
-   - 期限
-   - 金额
+1. **Basic Information Differences**
+   - Contract type
+   - Parties involved
+   - Term/Duration
+   - Value/Amount
 
-2. **条款差异**
-   - 新增的条款
-   - 删除的条款
-   - 修改的条款（标注具体变化）
+2. **Clause Differences**
+   - Added clauses
+   - Removed clauses
+   - Modified clauses (highlight specific changes)
 
-3. **风险变化**
-   - 风险增加的条款
-   - 风险降低的条款
+3. **Risk Changes**
+   - Clauses with increased risk
+   - Clauses with reduced risk
 
-4. **建议**
-   - 是否建议接受变更
-   - 需要注意的问题
+4. **Recommendations**
+   - Should the changes be accepted?
+   - Issues to be aware of
 
-请以结构化的 Markdown 格式输出对比报告。
-第一份文档标记为 [合同A]，第二份文档标记为 [合同B]。
+Output a structured Markdown comparison report.
+Label the first document as [Contract A] and the second as [Contract B].
+
+IMPORTANT: Respond in the same language as the contract documents.
 """
     
     response = client.messages.create(
@@ -335,68 +339,70 @@ def extract_key_terms(
     
     pdf_data = encode_pdf(pdf_path)
     
-    prompt = """请从这份合同中提取关键条款，以 JSON 格式输出：
+    prompt = """Extract key terms from this contract and output in JSON format:
 
 ```json
 {
-  "contract_type": "合同类型",
+  "contract_type": "type of contract",
   "parties": {
     "party_a": {
-      "name": "甲方名称",
-      "role": "甲方角色（如：雇主、卖方）",
-      "address": "地址（如有）"
+      "name": "Party A name",
+      "role": "Party A role (e.g., employer, seller)",
+      "address": "address if available"
     },
     "party_b": {
-      "name": "乙方名称", 
-      "role": "乙方角色（如：员工、买方）",
-      "address": "地址（如有）"
+      "name": "Party B name", 
+      "role": "Party B role (e.g., employee, buyer)",
+      "address": "address if available"
     }
   },
   "dates": {
-    "effective_date": "生效日期",
-    "end_date": "终止日期",
-    "signing_date": "签署日期"
+    "effective_date": "effective date",
+    "end_date": "termination date",
+    "signing_date": "signing date"
   },
   "financial_terms": {
-    "total_value": "合同总金额",
-    "payment_terms": "付款条款",
-    "currency": "货币单位"
+    "total_value": "total contract value",
+    "payment_terms": "payment terms",
+    "currency": "currency"
   },
   "key_clauses": [
     {
-      "name": "条款名称",
-      "section": "所在章节",
-      "summary": "条款摘要",
-      "original_text": "原文节选"
+      "name": "clause name",
+      "section": "section number",
+      "summary": "clause summary",
+      "original_text": "excerpt from original text"
     }
   ],
   "obligations": {
-    "party_a": ["甲方义务1", "甲方义务2"],
-    "party_b": ["乙方义务1", "乙方义务2"]
+    "party_a": ["Party A obligation 1", "Party A obligation 2"],
+    "party_b": ["Party B obligation 1", "Party B obligation 2"]
   },
   "termination": {
-    "conditions": ["终止条件"],
-    "notice_period": "通知期限",
-    "consequences": "终止后果"
+    "conditions": ["termination conditions"],
+    "notice_period": "notice period",
+    "consequences": "termination consequences"
   },
   "confidentiality": {
-    "scope": "保密范围",
-    "duration": "保密期限",
-    "exceptions": ["例外情况"]
+    "scope": "confidentiality scope",
+    "duration": "confidentiality duration",
+    "exceptions": ["exceptions"]
   },
   "dispute_resolution": {
-    "method": "解决方式（诉讼/仲裁）",
-    "jurisdiction": "管辖地",
-    "governing_law": "适用法律"
+    "method": "resolution method (litigation/arbitration)",
+    "jurisdiction": "jurisdiction",
+    "governing_law": "governing law"
   }
 }
 ```
 
-请确保：
-1. 如果某项信息不存在，填写 null
-2. 日期格式统一为 YYYY-MM-DD
-3. 金额包含货币符号
-4. 只返回 JSON，不要其他解释
+Requirements:
+1. Use null for missing information
+2. Use ISO date format (YYYY-MM-DD)
+3. Include currency symbols with amounts
+4. Return only JSON, no additional explanation
+
+IMPORTANT: Extract values in the same language as the contract document.
 """
     
     response = client.messages.create(

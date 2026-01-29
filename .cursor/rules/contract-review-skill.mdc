@@ -66,60 +66,64 @@ If reviewing PDF with visual elements:
 
 Always check for these 15 common risk patterns:
 
-1. **无限责任** (Unlimited Liability) - No cap on liability → Recommend: Add 12-month fee cap
-2. **宽泛知识产权转让** (Broad IP Assignment) - Includes pre-existing IP → Exclude pre-existing IP
-3. **单方解约权** (Unilateral Termination) - One party can terminate without cause → Require mutual rights
-4. **自动续约陷阱** (Auto-Renewal Trap) - Difficult opt-out → Add clear opt-out mechanism
-5. **单向赔偿** (One-Sided Indemnity) - Only one party indemnifies → Negotiate mutual
-6. **过高违约金** (Excessive Penalty) - Disproportionate penalties → Ensure proportionality
-7. **宽泛竞业限制** (Broad Non-Compete) - Excessive scope/duration → Limit to 2 years, reasonable scope
-8. **永久保密** (Perpetual Confidentiality) - No expiration → Set 3-5 year limit
-9. **不利管辖** (Unfavorable Jurisdiction) - Distant venue → Negotiate neutral venue
-10. **宽泛权利放弃** (Broad Rights Waiver) - Waives fundamental rights → Remove or limit
-11. **范围变更无控制** (Uncontrolled Scope Changes) - No change process → Add change management
-12. **不利付款条款** (Unfavorable Payment Terms) - Long payment cycles → Negotiate shorter terms
-13. **缺少审计权** (Missing Audit Rights) - No audit provisions → Add audit rights
-14. **缺少不可抗力** (Missing Force Majeure) - No force majeure clause → Add standard clause
-15. **缺少数据保护** (Missing Data Protection) - No GDPR/PIPL compliance → Add data protection clause
+1. **Unlimited Liability** - No cap on liability → Recommend: Add 12-month fee cap
+2. **Broad IP Assignment** - Includes pre-existing IP → Exclude pre-existing IP
+3. **Unilateral Termination** - One party can terminate without cause → Require mutual rights
+4. **Auto-Renewal Trap** - Difficult opt-out → Add clear opt-out mechanism
+5. **One-Sided Indemnity** - Only one party indemnifies → Negotiate mutual
+6. **Excessive Penalty** - Disproportionate penalties → Ensure proportionality
+7. **Broad Non-Compete** - Excessive scope/duration → Limit to 2 years, reasonable scope
+8. **Perpetual Confidentiality** - No expiration → Set 3-5 year limit
+9. **Unfavorable Jurisdiction** - Distant venue → Negotiate neutral venue
+10. **Broad Rights Waiver** - Waives fundamental rights → Remove or limit
+11. **Uncontrolled Scope Changes** - No change process → Add change management
+12. **Unfavorable Payment Terms** - Long payment cycles → Negotiate shorter terms
+13. **Missing Audit Rights** - No audit provisions → Add audit rights
+14. **Missing Force Majeure** - No force majeure clause → Add standard clause
+15. **Missing Data Protection** - No GDPR/PIPL/CCPA compliance → Add data protection clause
 
 ## Output Format
 
 ```markdown
-# 合同审阅报告
+# Contract Review Report
 
-## 概览
-- 合同类型: 
-- 当事人: 甲方 ↔ 乙方
-- 生效日期: 
-- 合同期限: 
+## Overview
+- Contract Type: 
+- Parties: Party A ↔ Party B
+- Effective Date: 
+- Term: 
 
-## 风险评估
+## Risk Assessment
 
-### 🔴 高风险 (X 项)
-1. **[风险名称]** (条款 X.X)
-   - 问题: 
-   - 影响: 
-   - 建议: 
+### 🔴 High Risk (X items)
+1. **[Risk Name]** (Section X.X)
+   - Issue: 
+   - Impact: 
+   - Recommendation: 
 
-### 🟡 中风险 (X 项)
+### 🟡 Medium Risk (X items)
 ...
 
-### 🟢 低风险 (X 项)
+### 🟢 Low Risk (X items)
 ...
 
-## 完整性检查
-- ✅ 甲方签名: 已检测
-- ⚠️ 乙方签名: 未发现
+## Completeness Check
+- ✅ Party A Signature: Detected
+- ⚠️ Party B Signature: Not found
 ...
 
-## 总体评估
-- **风险等级**: 高/中/低
-- **建议**: 可签署 / 谨慎签署 / 不建议签署
-- **摘要**: 2-3句总结
+## Overall Assessment
+- **Risk Level**: High/Medium/Low
+- **Recommendation**: Proceed / Proceed with Caution / Do Not Proceed
+- **Summary**: 2-3 sentence summary
 ```
 
-## Language
+## Language Adaptation
 
-- If contract is in Chinese, respond in Chinese
-- If contract is in English, respond in English
-- Be specific about clause numbers when citing issues
+**IMPORTANT**: Respond in the same language as the contract document.
+- Chinese contract → Chinese response
+- English contract → English response  
+- Japanese contract → Japanese response
+- Other languages → Match the contract language
+
+Be specific about clause numbers when citing issues.
