@@ -1,0 +1,22 @@
+{
+  "name": "contract-review-skill",
+  "version": "1.0.0",
+  "description": "AI-powered contract analysis that identifies risks and checks completeness",
+  "author": "claude-office-skills",
+  "repository": "https://github.com/claude-office-skills/contract-review-skill",
+  "license": "MIT",
+  "skills": [
+    {
+      "path": "SKILL.md",
+      "name": "contract-review",
+      "description": "Analyze contracts for risks, completeness, and legal compliance"
+    }
+  ],
+  "keywords": [
+    "contract",
+    "legal",
+    "review",
+    "risk-analysis",
+    "document-processing"
+  ]
+}
