@@ -18,7 +18,13 @@ load_dotenv()
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.analyze import analyze_contract, check_completeness, compare_contracts
+from src.analyze import (
+    analyze_contract, 
+    check_completeness, 
+    compare_contracts,
+    extract_key_terms,
+    generate_report
+)
 
 console = Console()
 
@@ -164,6 +170,84 @@ def compare(pdf_a, pdf_b, output):
 
 
 @cli.command()
+@click.argument("pdf_path", type=click.Path(exists=True))
+@click.option("--output", "-o", type=click.Path(), help="Output file path (JSON)")
+def extract(pdf_path, output):
+    """Extract key terms from a contract in structured JSON format."""
+    check_api_key()
+    
+    console.print(Panel(f"[bold blue]Extracting key terms:[/bold blue] {pdf_path}"))
+    
+    with console.status("[bold green]Extracting with Claude..."):
+        try:
+            result = extract_key_terms(pdf_path)
+        except Exception as e:
+            console.print(f"[red]Error: {e}[/red]")
+            sys.exit(1)
+    
+    if result["status"] == "success":
+        key_terms = result["key_terms"]
+        
+        console.print(
+            f"\n[dim]Tokens used: {result['usage']['input_tokens']} input, "
+            f"{result['usage']['output_tokens']} output[/dim]"
+        )
+        
+        if output:
+            import json
+            Path(output).write_text(
+                json.dumps(key_terms, ensure_ascii=False, indent=2),
+                encoding="utf-8"
+            )
+            console.print(f"\n[green]Key terms saved to:[/green] {output}")
+        else:
+            import json
+            console.print("\n")
+            console.print(json.dumps(key_terms, ensure_ascii=False, indent=2))
+    else:
+        console.print(f"[red]Extraction failed[/red]")
+        sys.exit(1)
+
+
+@cli.command()
+@click.argument("input_file", type=click.Path(exists=True))
+@click.argument("output_file", type=click.Path())
+@click.option(
+    "--format", "-f",
+    type=click.Choice(["markdown", "docx"]),
+    default="markdown",
+    help="Output format"
+)
+@click.option("--title", "-t", default="Contract Analysis Report", help="Report title")
+def export(input_file, output_file, format, title):
+    """Export analysis results to Markdown or DOCX format."""
+    
+    console.print(Panel(f"[bold blue]Exporting report:[/bold blue] {input_file} → {output_file}"))
+    
+    # Read input file
+    try:
+        analysis_text = Path(input_file).read_text(encoding="utf-8")
+    except Exception as e:
+        console.print(f"[red]Error reading input file: {e}[/red]")
+        sys.exit(1)
+    
+    # Generate report
+    result = generate_report(
+        analysis=analysis_text,
+        output_path=output_file,
+        format=format,
+        title=title
+    )
+    
+    if result["status"] == "success":
+        console.print(f"\n[green]Report exported to:[/green] {result['output_path']}")
+        console.print(f"[dim]Format: {result['format']}[/dim]")
+    else:
+        console.print(f"[red]Export failed: {result.get('message', 'Unknown error')}[/red]")
+        sys.exit(1)
+
+
+@cli.command()
 def info():
     """Show skill information and configuration."""
     console.print(Panel.fit(
@@ -171,6 +255,12 @@ def info():
         f"Version: 0.1.0\n"
         f"API Key: {'[green]Set[/green]' if os.getenv('ANTHROPIC_API_KEY') else '[red]Not set[/red]'}\n"
         f"Model: claude-sonnet-4-20250514\n\n"
+        "[bold]Available Commands:[/bold]\n"
+        "  analyze  - Full contract analysis\n"
+        "  extract  - Extract key terms (JSON)\n"
+        "  check    - Completeness check\n"
+        "  compare  - Compare two contracts\n"
+        "  export   - Export to MD/DOCX\n\n"
         "[dim]https://github.com/lijie420461340/contract-review-skill[/dim]",
         title="Info"
     ))

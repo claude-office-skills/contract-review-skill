@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Review Skill - Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0A0F1C;
+            --bg-secondary: #0F172A;
+            --bg-card: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --accent-blue: #2B579A;
+            --accent-green: #10B981;
+            --accent-yellow: #F59E0B;
+            --accent-red: #EF4444;
+            --accent-purple: #8B5CF6;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Main Layout */
+        .main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding: 24px 40px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background: var(--bg-card);
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-content {
+            padding: 20px;
+            max-height: calc(100vh - 180px);
+            overflow-y: auto;
+        }
+
+        /* Contract Text */
+        .contract-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .contract-text h1 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .contract-text h2 {
+            font-size: 14px;
+            color: var(--text-primary);
+            margin: 20px 0 8px 0;
+            font-weight: 600;
+        }
+
+        .contract-text p {
+            margin-bottom: 12px;
+        }
+
+        .highlight-risk {
+            background: rgba(239, 68, 68, 0.15);
+            border-left: 3px solid var(--accent-red);
+            padding: 8px 12px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-warning {
+            background: rgba(245, 158, 11, 0.15);
+            border-left: 3px solid var(--accent-yellow);
+            padding: 8px 12px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Analysis Report */
+        .report-section {
+            margin-bottom: 24px;
+        }
+
+        .report-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .overview-item {
+            background: var(--bg-card);
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+
+        .overview-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .overview-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Risk Items */
+        .risk-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid;
+        }
+
+        .risk-high {
+            border-color: var(--accent-red);
+        }
+
+        .risk-medium {
+            border-color: var(--accent-yellow);
+        }
+
+        .risk-low {
+            border-color: var(--accent-green);
+        }
+
+        .risk-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .risk-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-badge.high {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        .risk-badge.medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-yellow);
+        }
+
+        .risk-badge.low {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+
+        .risk-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .risk-location {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .risk-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .risk-details dt {
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        .risk-details dd {
+            margin-left: 0;
+            margin-top: 4px;
+        }
+
+        .recommendation {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        /* Completeness Check */
+        .completeness-grid {
+            display: grid;
+            gap: 8px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: var(--bg-card);
+            border-radius: 8px;
+        }
+
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .check-icon.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+
+        .check-icon.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-yellow);
+        }
+
+        .check-icon.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        /* Summary */
+        .summary-box {
+            background: linear-gradient(135deg, rgba(43, 87, 154, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .risk-level {
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .risk-level.medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-yellow);
+        }
+
+        .summary-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Key Terms Table */
+        .terms-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .terms-table th,
+        .terms-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terms-table th {
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .terms-table td {
+            color: var(--text-secondary);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3d6bb3;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">📝</div>
+            Contract Review Skill
+        </div>
+        <span class="badge">Demo</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Left: Original Contract -->
+        <div class="panel">
+            <div class="panel-header">
+                <span class="panel-title">
+                    📄 Original Contract
+                </span>
+                <span style="color: var(--text-muted); font-size: 12px;">Hourly_Employee_Contract.docx</span>
+            </div>
+            <div class="panel-content">
+                <div class="contract-text">
+                    <h1>HOURLY EMPLOYMENT AGREEMENT</h1>
+                    
+                    <p>This Employment Agreement (the "Agreement") is made and entered into as of __________________ (the "Effective Date"), by and between:</p>
+                    
+                    <p><strong>Employer:</strong> ________________________________________________ (the "Company")</p>
+                    <p><strong>Employee:</strong> ________________________________________________ (the "Employee")</p>
+
+                    <h2>1. Position and Employment Status</h2>
+                    <div class="highlight-risk">
+                        <p>The Employee shall serve in the position of ______________________. <strong>This is an at-will employment relationship, meaning that either the Company or the Employee may terminate the employment at any time, with or without cause, and with or without notice.</strong></p>
+                    </div>
+
+                    <h2>2. Duties and Responsibilities</h2>
+                    <div class="highlight-warning">
+                        <p>The Employee shall perform such duties as are customarily associated with the position and <strong>such other duties as may be assigned by the Company from time to time</strong>. The Employee agrees to devote their best efforts, attention, and skill to the performance of their duties.</p>
+                    </div>
+
+                    <h2>3. Compensation</h2>
+                    <p><strong>a. Hourly Rate:</strong> The Employee shall be paid an hourly rate of $________ per hour, less applicable taxes and withholdings.</p>
+                    <p><strong>b. Overtime:</strong> As a non-exempt hourly employee, the Employee is entitled to overtime pay in accordance with the Fair Labor Standards Act (FLSA). Hours worked in excess of 40 hours will be paid at 1.5x the regular rate.</p>
+                    <p><strong>c. Payment Schedule:</strong> Wages will be paid [Weekly/Bi-weekly/Semi-monthly].</p>
+
+                    <h2>4. Work Schedule</h2>
+                    <div class="highlight-warning">
+                        <p>The Employee's anticipated work schedule is [Describe Schedule]. <strong>The Company reserves the right to modify the schedule based on business needs.</strong></p>
+                    </div>
+
+                    <h2>5. Insurance and Benefits</h2>
+                    <p><strong>a. Statutory Insurance (Mandatory):</strong></p>
+                    <ul style="margin-left: 20px; margin-bottom: 12px;">
+                        <li>Workers' Compensation Insurance</li>
+                        <li>Unemployment Insurance</li>
+                        <li>Social Security and Medicare</li>
+                    </ul>
+                    <p><strong>b. Company Benefits (Optional):</strong> Subject to plan documents and Company policies.</p>
+
+                    <h2>6. Time Off</h2>
+                    <p>The Employee shall be entitled to [Number] hours/days of PTO per year. Sick leave per applicable laws.</p>
+
+                    <h2>7. Confidentiality</h2>
+                    <div class="highlight-warning">
+                        <p>The Employee agrees not to disclose any of the Company's proprietary information, trade secrets, or client data to any third party <strong>during or after their employment</strong>.</p>
+                    </div>
+
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                        <p><strong>IN WITNESS WHEREOF</strong>, the parties have executed this Agreement as of the Effective Date.</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px;">
+                            <div>
+                                <p><strong>Employer:</strong></p>
+                                <p style="border-bottom: 1px solid var(--border-color); height: 30px;"></p>
+                                <p style="font-size: 11px; color: var(--text-muted);">Signature</p>
+                            </div>
+                            <div>
+                                <p><strong>Employee:</strong></p>
+                                <p style="border-bottom: 1px solid var(--border-color); height: 30px;"></p>
+                                <p style="font-size: 11px; color: var(--text-muted);">Signature</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Analysis Report -->
+        <div class="panel">
+            <div class="panel-header">
+                <span class="panel-title">
+                    🔍 AI Analysis Report
+                </span>
+                <span style="color: var(--accent-green); font-size: 12px;">✓ Analysis Complete</span>
+            </div>
+            <div class="panel-content">
+                <!-- Overview -->
+                <div class="report-section">
+                    <h3 class="report-title">📋 Contract Overview</h3>
+                    <div class="overview-grid">
+                        <div class="overview-item">
+                            <div class="overview-label">Contract Type</div>
+                            <div class="overview-value">Employment Agreement (Hourly)</div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-label">Employment Type</div>
+                            <div class="overview-value">At-Will, Non-Exempt</div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-label">Effective Date</div>
+                            <div class="overview-value" style="color: var(--accent-yellow);">⚠️ Not specified</div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-label">Governing Law</div>
+                            <div class="overview-value">FLSA + State Laws</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk Assessment -->
+                <div class="report-section">
+                    <h3 class="report-title">⚠️ Risk Assessment</h3>
+                    
+                    <!-- High Risk -->
+                    <div class="risk-item risk-high">
+                        <div class="risk-header">
+                            <span class="risk-badge high">High</span>
+                            <span class="risk-title">At-Will Termination Without Notice</span>
+                        </div>
+                        <span class="risk-location">Section 1 - Position and Employment Status</span>
+                        <dl class="risk-details">
+                            <dt>Issue</dt>
+                            <dd>Either party can terminate "at any time, with or without cause, and with or without notice."</dd>
+                            <dt>Impact</dt>
+                            <dd>Employee has no job security; can be terminated immediately without warning or severance.</dd>
+                        </dl>
+                        <div class="recommendation">
+                            💡 <strong>Recommendation:</strong> Negotiate a minimum notice period (e.g., 2 weeks) or severance terms.
+                        </div>
+                    </div>
+
+                    <!-- Medium Risk -->
+                    <div class="risk-item risk-medium">
+                        <div class="risk-header">
+                            <span class="risk-badge medium">Medium</span>
+                            <span class="risk-title">Broad Duty Assignment</span>
+                        </div>
+                        <span class="risk-location">Section 2 - Duties and Responsibilities</span>
+                        <dl class="risk-details">
+                            <dt>Issue</dt>
+                            <dd>"Such other duties as may be assigned by the Company from time to time" is overly broad.</dd>
+                            <dt>Impact</dt>
+                            <dd>Employee may be required to perform tasks outside their job description or skill set.</dd>
+                        </dl>
+                        <div class="recommendation">
+                            💡 <strong>Recommendation:</strong> Add "consistent with the Employee's position and qualifications."
+                        </div>
+                    </div>
+
+                    <div class="risk-item risk-medium">
+                        <div class="risk-header">
+                            <span class="risk-badge medium">Medium</span>
+                            <span class="risk-title">Unilateral Schedule Changes</span>
+                        </div>
+                        <span class="risk-location">Section 4 - Work Schedule</span>
+                        <dl class="risk-details">
+                            <dt>Issue</dt>
+                            <dd>Company can modify schedule "based on business needs" without employee consent.</dd>
+                            <dt>Impact</dt>
+                            <dd>Employee's work-life balance may be disrupted without advance notice.</dd>
+                        </dl>
+                        <div class="recommendation">
+                            💡 <strong>Recommendation:</strong> Add minimum notice period (e.g., 1 week) for schedule changes.
+                        </div>
+                    </div>
+
+                    <div class="risk-item risk-medium">
+                        <div class="risk-header">
+                            <span class="risk-badge medium">Medium</span>
+                            <span class="risk-title">Perpetual Confidentiality</span>
+                        </div>
+                        <span class="risk-location">Section 7 - Confidentiality</span>
+                        <dl class="risk-details">
+                            <dt>Issue</dt>
+                            <dd>Confidentiality obligation extends indefinitely "after their employment."</dd>
+                            <dt>Impact</dt>
+                            <dd>Employee bound forever even for information that becomes public or obsolete.</dd>
+                        </dl>
+                        <div class="recommendation">
+                            💡 <strong>Recommendation:</strong> Limit to 3-5 years post-employment; exclude publicly available information.
+                        </div>
+                    </div>
+
+                    <!-- Low Risk -->
+                    <div class="risk-item risk-low">
+                        <div class="risk-header">
+                            <span class="risk-badge low">Low</span>
+                            <span class="risk-title">Vague PTO Policy</span>
+                        </div>
+                        <span class="risk-location">Section 6 - Time Off</span>
+                        <dl class="risk-details">
+                            <dt>Issue</dt>
+                            <dd>PTO amount specified as "[Number]" - placeholder not filled.</dd>
+                            <dt>Impact</dt>
+                            <dd>Unclear entitlement may lead to disputes.</dd>
+                        </dl>
+                        <div class="recommendation">
+                            💡 <strong>Recommendation:</strong> Ensure specific PTO days/hours are filled in before signing.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Terms -->
+                <div class="report-section">
+                    <h3 class="report-title">📊 Key Terms Summary</h3>
+                    <table class="terms-table">
+                        <thead>
+                            <tr>
+                                <th>Term</th>
+                                <th>Value</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Employment Type</td>
+                                <td>At-Will</td>
+                                <td><span class="risk-badge high">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>Hourly Rate</td>
+                                <td>$________ (TBD)</td>
+                                <td><span class="risk-badge low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td>Overtime</td>
+                                <td>1.5x after 40hrs (FLSA)</td>
+                                <td><span class="risk-badge low">OK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Benefits</td>
+                                <td>Statutory only (optional extras)</td>
+                                <td><span class="risk-badge medium">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>Confidentiality</td>
+                                <td>Perpetual</td>
+                                <td><span class="risk-badge medium">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>Non-Compete</td>
+                                <td>Not included</td>
+                                <td><span class="risk-badge low">OK</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Completeness Check -->
+                <div class="report-section">
+                    <h3 class="report-title">✅ Completeness Check</h3>
+                    <div class="completeness-grid">
+                        <div class="check-item">
+                            <span class="check-icon warning">⚠️</span>
+                            <span>Employer Signature: <strong>Not signed</strong></span>
+                        </div>
+                        <div class="check-item">
+                            <span class="check-icon warning">⚠️</span>
+                            <span>Employee Signature: <strong>Not signed</strong></span>
+                        </div>
+                        <div class="check-item">
+                            <span class="check-icon error">❌</span>
+                            <span>Effective Date: <strong>Not filled</strong></span>
+                        </div>
+                        <div class="check-item">
+                            <span class="check-icon error">❌</span>
+                            <span>Hourly Rate: <strong>Not specified</strong></span>
+                        </div>
+                        <div class="check-item">
+                            <span class="check-icon error">❌</span>
+                            <span>PTO Days: <strong>Not specified</strong></span>
+                        </div>
+                        <div class="check-item">
+                            <span class="check-icon success">✓</span>
+                            <span>Overtime Terms: <strong>Properly defined</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="report-section">
+                    <h3 class="report-title">📝 Overall Assessment</h3>
+                    <div class="summary-box">
+                        <div class="summary-header">
+                            <strong>Risk Level:</strong>
+                            <span class="risk-level medium">⚠️ MEDIUM</span>
+                        </div>
+                        <div class="summary-header" style="margin-bottom: 16px;">
+                            <strong>Recommendation:</strong>
+                            <span style="color: var(--accent-yellow);">Proceed with Caution</span>
+                        </div>
+                        <p class="summary-text">
+                            This is a standard hourly employment agreement with typical at-will provisions. The main concerns are: 
+                            <strong>(1)</strong> lack of termination notice period, 
+                            <strong>(2)</strong> overly broad duty assignment, 
+                            <strong>(3)</strong> perpetual confidentiality without time limit.
+                            <br><br>
+                            Before signing, ensure all blanks are filled (rate, dates, PTO) and consider negotiating a minimum notice period for termination.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer CTA -->
+    <footer class="footer-cta">
+        <button class="btn btn-primary">
+            📤 Export Report (Markdown)
+        </button>
+        <button class="btn btn-secondary">
+            📝 Export Report (DOCX)
+        </button>
+        <a href="https://github.com/lijie420461340/contract-review-skill" target="_blank" class="btn btn-secondary">
+            ⭐ Star on GitHub
+        </a>
+    </footer>
+</body>
+</html>
