@@ -1,0 +1,282 @@
+{
+  "jurisdiction": {
+    "country": "United States",
+    "code": "US",
+    "primary_laws": [
+      {
+        "name": "Fair Labor Standards Act (FLSA)",
+        "citation": "29 U.S.C. § 201 et seq.",
+        "effective_date": "1938-06-25",
+        "source_url": "https://www.dol.gov/agencies/whd/flsa",
+        "description": "Federal law establishing minimum wage, overtime pay, recordkeeping, and child labor standards"
+      },
+      {
+        "name": "Title VII of the Civil Rights Act",
+        "citation": "42 U.S.C. § 2000e",
+        "source_url": "https://www.eeoc.gov/statutes/title-vii-civil-rights-act-1964",
+        "description": "Prohibits employment discrimination based on race, color, religion, sex, and national origin"
+      },
+      {
+        "name": "Americans with Disabilities Act (ADA)",
+        "citation": "42 U.S.C. § 12101",
+        "source_url": "https://www.ada.gov/",
+        "description": "Prohibits discrimination against individuals with disabilities"
+      }
+    ]
+  },
+  
+  "employment_types": {
+    "at_will": {
+      "description": "Default employment relationship in most US states where either party can terminate at any time, with or without cause",
+      "exceptions": [
+        "Montana (requires cause after probationary period)",
+        "Public policy exceptions",
+        "Implied contract exceptions",
+        "Covenant of good faith exceptions"
+      ],
+      "risk_level": "high",
+      "employee_risk": "Can be terminated without notice or severance",
+      "recommendation": "Negotiate notice period or severance terms if possible"
+    },
+    "exempt_vs_nonexempt": {
+      "nonexempt": {
+        "description": "Employees entitled to minimum wage and overtime pay",
+        "overtime_rate": "1.5x regular rate for hours over 40/week",
+        "typical_roles": ["Hourly workers", "Most blue-collar jobs", "Many administrative roles"]
+      },
+      "exempt": {
+        "description": "Employees not entitled to overtime (must meet specific criteria)",
+        "salary_threshold": "$684/week ($35,568/year) as of 2024",
+        "duties_tests": ["Executive", "Administrative", "Professional", "Computer", "Outside Sales"],
+        "warning": "Misclassification is a major compliance risk"
+      }
+    }
+  },
+
+  "hourly_employee_requirements": {
+    "minimum_wage": {
+      "federal": "$7.25/hour",
+      "note": "Many states and cities have higher minimums",
+      "state_examples": {
+        "california": "$16.00/hour (2024)",
+        "new_york": "$15.00-$16.00/hour (varies by region)",
+        "washington": "$16.28/hour (2024)",
+        "texas": "$7.25/hour (federal minimum)"
+      },
+      "compliance_rule": "Must pay the higher of federal, state, or local minimum"
+    },
+    "overtime": {
+      "threshold": "40 hours per workweek",
+      "rate": "1.5x regular hourly rate",
+      "exceptions": ["Some agricultural workers", "Certain seasonal employees"],
+      "state_variations": {
+        "california": "Daily overtime after 8 hours; double time after 12 hours",
+        "alaska": "Daily overtime after 8 hours"
+      }
+    },
+    "recordkeeping": {
+      "required_records": [
+        "Employee full name and Social Security number",
+        "Address including ZIP code",
+        "Birth date (if under 19)",
+        "Sex and occupation",
+        "Time and day of week when workweek begins",
+        "Hours worked each day and total hours each workweek",
+        "Basis of pay (hourly, weekly, piecework)",
+        "Regular hourly pay rate",
+        "Total daily or weekly straight-time earnings",
+        "Total overtime earnings for the workweek",
+        "All additions to or deductions from wages",
+        "Total wages paid each pay period",
+        "Date of payment and pay period covered"
+      ],
+      "retention_period": "3 years for payroll records; 2 years for time cards",
+      "source": "DOL Fact Sheet #21"
+    }
+  },
+
+  "mandatory_contract_elements": {
+    "should_include": [
+      {
+        "element": "Job Title and Description",
+        "importance": "medium",
+        "note": "Defines scope of work; can limit duty expansion"
+      },
+      {
+        "element": "Compensation",
+        "importance": "high",
+        "details": ["Hourly rate", "Payment frequency", "Overtime eligibility"]
+      },
+      {
+        "element": "Work Schedule",
+        "importance": "medium",
+        "note": "Expected hours; basis for overtime calculation"
+      },
+      {
+        "element": "Employment Status",
+        "importance": "high",
+        "details": ["At-will statement", "Exempt/Non-exempt classification"]
+      },
+      {
+        "element": "Benefits",
+        "importance": "medium",
+        "details": ["Health insurance eligibility", "PTO/Sick leave", "Retirement plans"]
+      }
+    ],
+    "legally_required": [
+      {
+        "element": "Workers' Compensation Notice",
+        "requirement": "Most states require notice of workers' comp coverage"
+      },
+      {
+        "element": "EEO Statement",
+        "requirement": "Recommended for compliance with anti-discrimination laws"
+      },
+      {
+        "element": "I-9 Employment Eligibility",
+        "requirement": "Must verify work authorization (separate form)"
+      }
+    ]
+  },
+
+  "risk_patterns": [
+    {
+      "id": "us_misclassification",
+      "name": "Employee Misclassification",
+      "severity": "high",
+      "description": "Treating employees as independent contractors or exempt when they don't qualify",
+      "legal_test": "Economic reality test (DOL) / ABC test (many states)",
+      "penalties": "Back wages, overtime, benefits, penalties, legal fees",
+      "indicators": [
+        "1099 instead of W-2",
+        "No benefits for full-time workers",
+        "Exempt classification without meeting duties test"
+      ]
+    },
+    {
+      "id": "us_at_will_no_notice",
+      "name": "At-Will Without Protections",
+      "severity": "high",
+      "description": "Contract allows termination without any notice period",
+      "standard_practice": "Most US contracts include at-will language",
+      "employee_risk": "Immediate job loss with no warning",
+      "recommendation": "Negotiate 2-week notice period or severance if key employee"
+    },
+    {
+      "id": "us_overtime_waiver",
+      "name": "Overtime Waiver Attempt",
+      "severity": "high",
+      "description": "Contract attempts to waive overtime rights for non-exempt employees",
+      "legal_status": "FLSA overtime rights cannot be waived by contract",
+      "red_flags": [
+        "Language waiving overtime",
+        "Comp time instead of overtime pay (private sector)",
+        "Averaging hours over multiple weeks"
+      ]
+    },
+    {
+      "id": "us_broad_noncompete",
+      "name": "Overly Broad Non-Compete",
+      "severity": "medium",
+      "description": "Non-compete clause exceeding enforceable limits",
+      "state_variations": {
+        "california": "Non-competes generally unenforceable",
+        "new_york": "Must be reasonable in time, geography, scope",
+        "texas": "Enforceable if ancillary to enforceable agreement"
+      },
+      "ftc_rule_2024": "FTC proposed banning most non-competes (pending litigation)",
+      "recommendation": "Check state law; limit to 1-2 years and specific geography"
+    },
+    {
+      "id": "us_arbitration_mandatory",
+      "name": "Mandatory Arbitration Clause",
+      "severity": "medium",
+      "description": "Requires employee to waive right to court/jury trial",
+      "legal_status": "Generally enforceable under FAA",
+      "exceptions": "Sexual harassment/assault claims (2022 law)",
+      "employee_impact": "Limits legal remedies; often favors employers",
+      "recommendation": "Understand implications; may be non-negotiable"
+    },
+    {
+      "id": "us_ip_work_for_hire",
+      "name": "Broad IP Assignment / Work for Hire",
+      "severity": "medium",
+      "description": "Assigns all work product including personal projects",
+      "standard_practice": "Common in tech/creative industries",
+      "state_protections": {
+        "california": "Labor Code 2870 protects personal inventions",
+        "delaware": "Similar protections",
+        "washington": "Similar protections"
+      },
+      "recommendation": "Ensure personal projects outside work hours are excluded"
+    }
+  ],
+
+  "state_specific_notes": {
+    "california": {
+      "key_differences": [
+        "Daily overtime after 8 hours",
+        "Meal and rest break requirements",
+        "Non-competes unenforceable",
+        "Strong employee protections (Labor Code)",
+        "CCPA privacy rights"
+      ],
+      "risk_level": "High regulation; employee-friendly"
+    },
+    "texas": {
+      "key_differences": [
+        "Strong at-will presumption",
+        "Non-competes enforceable if reasonable",
+        "Limited state employment protections beyond federal"
+      ],
+      "risk_level": "Lower regulation; employer-friendly"
+    },
+    "new_york": {
+      "key_differences": [
+        "NYC has additional protections",
+        "Salary history ban",
+        "Paid family leave",
+        "Strong wage theft protections"
+      ],
+      "risk_level": "High regulation; employee-friendly"
+    }
+  },
+
+  "compliance_checklist": {
+    "employer_must_provide": [
+      "Written notice of pay rate (many states)",
+      "Workers' compensation information",
+      "Unemployment insurance information",
+      "Anti-harassment policy",
+      "Safety information (OSHA poster)"
+    ],
+    "contract_should_address": [
+      "Compensation and payment schedule",
+      "Working hours and overtime eligibility",
+      "Benefits and eligibility dates",
+      "At-will status (if applicable)",
+      "Confidentiality obligations",
+      "IP/invention assignment (if applicable)",
+      "Termination conditions"
+    ],
+    "avoid_these_clauses": [
+      "Overtime waiver for non-exempt employees",
+      "Minimum wage below applicable rate",
+      "Illegal non-compete (check state law)",
+      "Waiver of workers' comp rights",
+      "Discrimination-enabling language"
+    ]
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2025-01-29",
+    "sources": [
+      "U.S. Department of Labor (dol.gov)",
+      "EEOC (eeoc.gov)",
+      "State labor department websites",
+      "Cornell Law School Legal Information Institute"
+    ],
+    "disclaimer": "This knowledge base is for informational purposes only and does not constitute legal advice. Consult a qualified attorney for specific legal questions."
+  }
+}

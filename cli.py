@@ -23,7 +23,9 @@ from src.analyze import (
     check_completeness, 
     compare_contracts,
     extract_key_terms,
-    generate_report
+    generate_report,
+    get_available_jurisdictions,
+    load_jurisdiction_knowledge
 )
 
 console = Console()
@@ -59,15 +61,39 @@ def cli():
     help="Output format"
 )
 @click.option("--model", "-m", default="claude-sonnet-4-20250514", help="Claude model to use")
-def analyze(pdf_path, output, format, model):
+@click.option(
+    "--jurisdiction", "-j",
+    type=click.Choice(["us", "china", "eu", "uk", "auto"]),
+    default="auto",
+    help="Jurisdiction for legal analysis (auto-detect if not specified)"
+)
+@click.option(
+    "--contract-type", "-t",
+    type=click.Choice(["employment", "nda", "service", "procurement"]),
+    default="employment",
+    help="Type of contract for jurisdiction-specific rules"
+)
+def analyze(pdf_path, output, format, model, jurisdiction, contract_type):
     """Analyze a contract PDF and identify risks."""
     check_api_key()
     
-    console.print(Panel(f"[bold blue]Analyzing contract:[/bold blue] {pdf_path}"))
+    jurisdiction_display = jurisdiction if jurisdiction != "auto" else "auto-detect"
+    console.print(Panel(
+        f"[bold blue]Analyzing contract:[/bold blue] {pdf_path}\n"
+        f"[dim]Jurisdiction: {jurisdiction_display} | Type: {contract_type}[/dim]"
+    ))
+    
+    # Set jurisdiction to None for auto-detect
+    actual_jurisdiction = None if jurisdiction == "auto" else jurisdiction
     
     with console.status("[bold green]Processing with Claude..."):
         try:
-            result = analyze_contract(pdf_path, model=model)
+            result = analyze_contract(
+                pdf_path, 
+                model=model, 
+                jurisdiction=actual_jurisdiction,
+                contract_type=contract_type
+            )
         except Exception as e:
             console.print(f"[red]Error: {e}[/red]")
             sys.exit(1)
@@ -248,19 +274,65 @@ def export(input_file, output_file, format, title):
 
 
 @cli.command()
+@click.option("--jurisdiction", "-j", help="Show details for specific jurisdiction")
+def jurisdictions(jurisdiction):
+    """List available jurisdiction knowledge bases."""
+    available = get_available_jurisdictions()
+    
+    if not available:
+        console.print("[yellow]No jurisdiction knowledge bases found.[/yellow]")
+        return
+    
+    if jurisdiction:
+        # Show details for specific jurisdiction
+        knowledge = load_jurisdiction_knowledge(jurisdiction, "employment")
+        if not knowledge:
+            console.print(f"[red]No knowledge base found for: {jurisdiction}[/red]")
+            return
+        
+        console.print(Panel(f"[bold]Jurisdiction: {jurisdiction.upper()}[/bold]"))
+        
+        # Show primary laws
+        if "jurisdiction" in knowledge and "primary_laws" in knowledge["jurisdiction"]:
+            console.print("\n[bold]Primary Laws:[/bold]")
+            for law in knowledge["jurisdiction"]["primary_laws"]:
+                console.print(f"  • {law['name']} ({law['citation']})")
+        
+        # Show risk patterns count
+        if "risk_patterns" in knowledge:
+            console.print(f"\n[bold]Risk Patterns:[/bold] {len(knowledge['risk_patterns'])} jurisdiction-specific patterns")
+        
+        # Show state notes if US
+        if "state_specific_notes" in knowledge:
+            console.print(f"\n[bold]State-Specific Notes:[/bold] {len(knowledge['state_specific_notes'])} states covered")
+    else:
+        # List all available
+        console.print(Panel.fit(
+            "[bold]Available Jurisdiction Knowledge Bases[/bold]\n\n" +
+            "\n".join([f"  • {j.upper()}" for j in available]) +
+            "\n\n[dim]Use --jurisdiction <code> for details[/dim]",
+            title="Jurisdictions"
+        ))
+
+
+@cli.command()
 def info():
     """Show skill information and configuration."""
+    available_jurisdictions = get_available_jurisdictions()
+    
     console.print(Panel.fit(
         "[bold]Contract Review Skill[/bold]\n\n"
         f"Version: 0.1.0\n"
         f"API Key: {'[green]Set[/green]' if os.getenv('ANTHROPIC_API_KEY') else '[red]Not set[/red]'}\n"
-        f"Model: claude-sonnet-4-20250514\n\n"
+        f"Model: claude-sonnet-4-20250514\n"
+        f"Jurisdictions: {', '.join(j.upper() for j in available_jurisdictions) if available_jurisdictions else 'None'}\n\n"
         "[bold]Available Commands:[/bold]\n"
-        "  analyze  - Full contract analysis\n"
-        "  extract  - Extract key terms (JSON)\n"
-        "  check    - Completeness check\n"
-        "  compare  - Compare two contracts\n"
-        "  export   - Export to MD/DOCX\n\n"
+        "  analyze       - Full contract analysis\n"
+        "  extract       - Extract key terms (JSON)\n"
+        "  check         - Completeness check\n"
+        "  compare       - Compare two contracts\n"
+        "  export        - Export to MD/DOCX\n"
+        "  jurisdictions - List legal knowledge bases\n\n"
         "[dim]https://github.com/lijie420461340/contract-review-skill[/dim]",
         title="Info"
     ))

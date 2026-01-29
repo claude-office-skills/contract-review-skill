@@ -21,6 +21,7 @@ except ImportError:
 # Load prompts and knowledge
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 KNOWLEDGE_DIR = Path(__file__).parent / "knowledge"
+JURISDICTIONS_DIR = KNOWLEDGE_DIR / "jurisdictions"
 
 
 def load_prompt(name: str) -> str:
@@ -39,6 +40,73 @@ def load_risk_patterns() -> dict:
     return {"patterns": []}
 
 
+def load_jurisdiction_knowledge(jurisdiction: str, contract_type: str = "employment") -> dict:
+    """
+    Load jurisdiction-specific legal knowledge.
+    
+    Args:
+        jurisdiction: Country code (e.g., "us", "china", "eu")
+        contract_type: Type of contract (e.g., "employment", "nda")
+        
+    Returns:
+        dict with jurisdiction-specific knowledge
+    """
+    knowledge_path = JURISDICTIONS_DIR / jurisdiction / f"{contract_type}.json"
+    if knowledge_path.exists():
+        return json.loads(knowledge_path.read_text(encoding="utf-8"))
+    return {}
+
+
+def get_available_jurisdictions() -> list:
+    """Get list of available jurisdiction knowledge bases."""
+    if not JURISDICTIONS_DIR.exists():
+        return []
+    return [d.name for d in JURISDICTIONS_DIR.iterdir() if d.is_dir()]
+
+
+def build_jurisdiction_context(jurisdiction: str, contract_type: str = "employment") -> str:
+    """
+    Build a context string from jurisdiction knowledge for prompt injection.
+    
+    Args:
+        jurisdiction: Country code
+        contract_type: Type of contract
+        
+    Returns:
+        Formatted string with relevant legal knowledge
+    """
+    knowledge = load_jurisdiction_knowledge(jurisdiction, contract_type)
+    if not knowledge:
+        return ""
+    
+    context_parts = []
+    
+    # Add primary laws
+    if "jurisdiction" in knowledge and "primary_laws" in knowledge["jurisdiction"]:
+        laws = knowledge["jurisdiction"]["primary_laws"]
+        context_parts.append("## Applicable Laws")
+        for law in laws:
+            context_parts.append(f"- **{law['name']}** ({law['citation']}): {law['description']}")
+    
+    # Add jurisdiction-specific risk patterns
+    if "risk_patterns" in knowledge:
+        context_parts.append("\n## Jurisdiction-Specific Risk Patterns")
+        for pattern in knowledge["risk_patterns"]:
+            context_parts.append(f"- **{pattern['name']}** [{pattern['severity'].upper()}]: {pattern['description']}")
+            if "recommendation" in pattern:
+                context_parts.append(f"  - Recommendation: {pattern['recommendation']}")
+    
+    # Add compliance checklist
+    if "compliance_checklist" in knowledge:
+        checklist = knowledge["compliance_checklist"]
+        if "avoid_these_clauses" in checklist:
+            context_parts.append("\n## Red Flags for This Jurisdiction")
+            for item in checklist["avoid_these_clauses"]:
+                context_parts.append(f"- ⚠️ {item}")
+    
+    return "\n".join(context_parts)
+
+
 def encode_pdf(pdf_path: str) -> str:
     """Encode PDF file to base64."""
     with open(pdf_path, "rb") as f:
@@ -48,7 +116,9 @@ def encode_pdf(pdf_path: str) -> str:
 def analyze_contract(
     pdf_path: str,
     api_key: Optional[str] = None,
-    model: str = "claude-sonnet-4-20250514"
+    model: str = "claude-sonnet-4-20250514",
+    jurisdiction: Optional[str] = None,
+    contract_type: str = "employment"
 ) -> dict:
     """
     Analyze a contract PDF and return structured analysis.
@@ -57,6 +127,9 @@ def analyze_contract(
         pdf_path: Path to the PDF file
         api_key: Claude API key (defaults to ANTHROPIC_API_KEY env var)
         model: Claude model to use
+        jurisdiction: Optional jurisdiction code (e.g., "us", "china", "eu")
+                     If not provided, will attempt to auto-detect
+        contract_type: Type of contract for jurisdiction-specific knowledge
         
     Returns:
         dict with analysis results
@@ -68,19 +141,35 @@ def analyze_contract(
     analysis_prompt = load_prompt("risk_analysis")
     risk_patterns = load_risk_patterns()
     
+    # Load jurisdiction-specific knowledge if available
+    jurisdiction_context = ""
+    if jurisdiction:
+        jurisdiction_context = build_jurisdiction_context(jurisdiction, contract_type)
+    
     # Encode PDF
     pdf_data = encode_pdf(pdf_path)
     
-    # Build the full prompt with risk patterns
+    # Build the full prompt with risk patterns and jurisdiction knowledge
+    jurisdiction_section = ""
+    if jurisdiction_context:
+        jurisdiction_section = f"""
+## Jurisdiction-Specific Legal Context ({jurisdiction.upper()})
+
+{jurisdiction_context}
+
+When analyzing this contract, pay special attention to the jurisdiction-specific requirements and risk patterns above.
+"""
+    
     full_prompt = f"""{analysis_prompt}
 
-## Risk Patterns Reference
+## General Risk Patterns Reference
 
 {json.dumps(risk_patterns, ensure_ascii=False, indent=2)}
-
+{jurisdiction_section}
 ---
 
 Please analyze the attached contract and provide a structured analysis following the format above.
+If jurisdiction was not specified, first identify the likely jurisdiction from the contract content (governing law clause, party locations, legal references) and apply relevant local laws.
 """
     
     # Call Claude API with PDF
