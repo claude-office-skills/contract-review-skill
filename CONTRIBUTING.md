@@ -194,6 +194,6 @@ src/knowledge/jurisdictions/{country}/
 
 ### Official Government Sources
 - US: [DOL](https://www.dol.gov/), [EEOC](https://www.eeoc.gov/)
-- China: [中国政府法规库](http://www.gov.cn/zhengce/)
+- China: [China Government Legal Database](http://www.gov.cn/zhengce/)
 - EU: [European Commission](https://ec.europa.eu/)
 - UK: [legislation.gov.uk](https://www.legislation.gov.uk/)

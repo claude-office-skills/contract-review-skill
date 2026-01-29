@@ -138,15 +138,15 @@ const JURISDICTION_KNOWLEDGE = {
     name: "China",
     name_zh: "中国",
     key_laws: [
-      { name: "劳动合同法", description: "核心劳动法规" },
-      { name: "社会保险法", description: "强制社保缴纳" },
-      { name: "就业促进法", description: "反歧视规定" }
+      { name: "Labor Contract Law", description: "Core employment law governing contracts" },
+      { name: "Social Insurance Law", description: "Mandatory social insurance contributions" },
+      { name: "Employment Promotion Law", description: "Anti-discrimination provisions" }
     ],
     risk_focus: [
-      "书面合同30天内签订",
-      "竞业限制最长2年",
-      "竞业限制需支付补偿（通常30%工资）",
-      "五险一金强制缴纳"
+      "Written contract required within 30 days",
+      "Non-compete limited to 2 years maximum",
+      "Non-compete compensation required (typically 30% of salary)",
+      "Social insurance contributions mandatory"
     ]
   },
   uk: {
@@ -295,40 +295,40 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
     {
       name: "scan_contract_risks",
-      description: "扫描合同文本中的潜在风险。返回匹配的风险及严重程度、关键词和上下文。",
+      description: "Scan contract text for potential risks. Returns matched risks with severity, keywords, and context.",
       inputSchema: {
         type: "object",
         properties: {
-          content: { type: "string", description: "要扫描的合同文本" }
+          content: { type: "string", description: "The contract text to scan" }
         },
         required: ["content"]
       }
     },
     {
       name: "check_contract_completeness",
-      description: "检查合同是否包含必要元素（当事人、日期、签名等）。返回检查清单。",
+      description: "Check if contract contains essential elements (parties, dates, signatures, etc.). Returns a checklist.",
       inputSchema: {
         type: "object",
         properties: {
-          content: { type: "string", description: "要检查的合同文本" }
+          content: { type: "string", description: "The contract text to check" }
         },
         required: ["content"]
       }
     },
     {
       name: "get_jurisdiction_knowledge",
-      description: "获取特定司法管辖区的法律知识，包括关键法律和风险关注点。",
+      description: "Get legal knowledge for a specific jurisdiction including key laws and risk focus areas.",
       inputSchema: {
         type: "object",
         properties: {
-          jurisdiction: { type: "string", description: "司法管辖区代码: us, eu, cn, uk", enum: ["us", "eu", "cn", "uk"] }
+          jurisdiction: { type: "string", description: "Jurisdiction code: us, eu, cn, uk", enum: ["us", "eu", "cn", "uk"] }
         },
         required: ["jurisdiction"]
       }
     },
     {
       name: "list_risk_patterns",
-      description: "列出所有可用的风险模式及其ID、名称和严重级别。",
+      description: "List all available risk patterns with their IDs, names, and severity levels.",
       inputSchema: { type: "object", properties: {} }
     }
   ]
@@ -342,8 +342,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     case "scan_contract_risks": {
       const risks = scanForRisks(args.content);
       const summary = risks.length > 0
-        ? `发现 ${risks.length} 个潜在风险 (高风险: ${risks.filter(r => r.severity === 'high').length}, 中风险: ${risks.filter(r => r.severity === 'medium').length}, 低风险: ${risks.filter(r => r.severity === 'low').length})`
-        : "未发现明显风险";
+        ? `Found ${risks.length} potential risks (High: ${risks.filter(r => r.severity === 'high').length}, Medium: ${risks.filter(r => r.severity === 'medium').length}, Low: ${risks.filter(r => r.severity === 'low').length})`
+        : "No obvious risks detected";
 
       return {
         content: [{
@@ -375,7 +375,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const knowledge = JURISDICTION_KNOWLEDGE[args.jurisdiction];
       if (!knowledge) {
         return {
-          content: [{ type: "text", text: `未知的司法管辖区: ${args.jurisdiction}。可用: us, eu, cn, uk` }]
+          content: [{ type: "text", text: `Unknown jurisdiction: ${args.jurisdiction}. Available: us, eu, cn, uk` }]
         };
       }
       return {
@@ -393,7 +393,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
 
     default:
-      return { content: [{ type: "text", text: `未知工具: ${name}` }] };
+      return { content: [{ type: "text", text: `Unknown tool: ${name}` }] };
   }
 });
 

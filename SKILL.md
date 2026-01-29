@@ -12,12 +12,12 @@ AI-powered contract analysis that identifies risks, extracts key terms, and gene
 - Support mixed text+image documents
 
 ### Visual Understanding
-- Detect and verify stamps/seals (公章检测)
-- Identify signature areas (签名区识别)
-- Validate document completeness (签章完整性检查)
+- Detect and verify stamps/seals
+- Identify signature areas
+- Validate document completeness
 
 ### Risk Analysis
-- Identify 15+ common risk patterns (限制条款、违约责任、知识产权等)
+- Identify 15+ common risk patterns (restrictions, liability, IP, etc.)
 - Compare against standard clause templates
 - Generate detailed review report with recommendations
 
@@ -33,12 +33,12 @@ AI-powered contract analysis that identifies risks, extracts key terms, and gene
 ## Domain Knowledge
 
 Embedded knowledge for:
-- 商业合同 (Business Contracts)
-- 劳动合同 (Employment Contracts)
-- 租赁合同 (Lease Agreements)
-- NDA (保密协议)
-- 采购合同 (Procurement Contracts)
-- 服务协议 (Service Agreements)
+- Business Contracts
+- Employment Contracts
+- Lease Agreements
+- NDA (Non-Disclosure Agreements)
+- Procurement Contracts
+- Service Agreements
 
 ## Requirements
 
