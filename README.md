@@ -140,7 +140,7 @@ This is **more than enough** for testing and small teams.
 
 ## 📊 Architecture
 
-> **Note**: This is the **Advanced** version of [Claude Office Skills](https://github.com/claude-office-skills/skills). For simple usage, just copy a SKILL.md file - no deployment needed!
+> **Note**: This is the **Advanced** version of [Claude Office Skills](https://github.com/claude-office-skills/all-in-one-skills). For simple usage, just copy a SKILL.md file - no deployment needed!
 
 ![Claude Office Skills Architecture](./architecture.png)
 
