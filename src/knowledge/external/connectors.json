@@ -1,0 +1,128 @@
+{
+  "description": "Registry of external knowledge sources that can be integrated",
+  "version": "1.0.0",
+  
+  "available_connectors": [
+    {
+      "id": "openlaws",
+      "name": "OpenLaws Legal Data API",
+      "type": "api",
+      "url": "https://openlaws.us/api/",
+      "docs": "https://openlaws.apidocumentation.com/",
+      "license": "Free API access (request required)",
+      "coverage": {
+        "jurisdictions": ["US Federal", "US States (all 50)"],
+        "content": ["Statutes", "Regulations", "Constitutions", "Case Law"],
+        "sections": "4.3+ million"
+      },
+      "features": [
+        "Query by Bluebook citation",
+        "Keyword search",
+        "Historical versions",
+        "Redline comparisons"
+      ],
+      "use_cases": [
+        "Validate legal citations in contracts",
+        "Look up specific statutes referenced",
+        "Check for recent law changes"
+      ],
+      "integration_status": "example_available"
+    },
+    {
+      "id": "cuad",
+      "name": "CUAD (Contract Understanding Atticus Dataset)",
+      "type": "dataset",
+      "url": "https://www.atticusprojectai.org/cuad",
+      "download": {
+        "zenodo": "https://zenodo.org/record/4595826",
+        "huggingface": "theatticusproject/cuad",
+        "github": "https://github.com/TheAtticusProject/cuad"
+      },
+      "license": "CC BY 4.0",
+      "coverage": {
+        "contracts": 510,
+        "labels": "13,000+",
+        "clause_categories": 41
+      },
+      "clause_categories": [
+        "Document Name", "Parties", "Agreement Date", "Effective Date",
+        "Expiration Date", "Renewal Term", "Notice Period", "Governing Law",
+        "Most Favored Nation", "Non-Compete", "Exclusivity", "No-Solicit",
+        "Competitive Restriction Exception", "Non-Disparagement", "Termination For Convenience",
+        "Rofr/Rofo/Rofn", "Change Of Control", "Anti-Assignment", "Revenue/Profit Sharing",
+        "Price Restriction", "Minimum Commitment", "Volume Restriction", "IP Ownership Assignment",
+        "Joint IP Ownership", "License Grant", "Non-Transferable License", "Affiliate License",
+        "Unlimited License", "Irrevocable License", "Source Code Escrow", "Post-Termination Services",
+        "Audit Rights", "Uncapped Liability", "Cap On Liability", "Liquidated Damages",
+        "Warranty Duration", "Insurance", "Covenant Not To Sue", "Third Party Beneficiary"
+      ],
+      "use_cases": [
+        "Train clause detection models",
+        "Benchmark contract analysis accuracy",
+        "Reference for clause categorization"
+      ],
+      "integration_status": "example_available"
+    },
+    {
+      "id": "opencontracts",
+      "name": "OpenContracts",
+      "type": "platform",
+      "url": "https://github.com/JSv4/OpenContracts",
+      "license": "Apache 2.0 / AGPL-3.0",
+      "features": [
+        "PDF layout extraction",
+        "Vector embeddings",
+        "Human annotation interface",
+        "LlamaIndex integration"
+      ],
+      "use_cases": [
+        "Build custom contract analysis workflows",
+        "Annotate and train on your own contracts"
+      ],
+      "integration_status": "reference_only"
+    },
+    {
+      "id": "eurlex",
+      "name": "EUR-Lex",
+      "type": "api",
+      "url": "https://eur-lex.europa.eu/",
+      "api_docs": "https://eur-lex.europa.eu/content/help/webservice.html",
+      "license": "Free / Open Data",
+      "coverage": {
+        "jurisdictions": ["EU"],
+        "content": ["EU Law", "Treaties", "Directives", "Regulations", "GDPR"]
+      },
+      "use_cases": [
+        "EU contract compliance checking",
+        "GDPR reference"
+      ],
+      "integration_status": "planned"
+    },
+    {
+      "id": "cornell_lii",
+      "name": "Cornell Legal Information Institute",
+      "type": "reference",
+      "url": "https://www.law.cornell.edu/",
+      "license": "Free",
+      "coverage": {
+        "jurisdictions": ["US"],
+        "content": ["US Code", "CFR", "Supreme Court opinions", "Legal encyclopedia"]
+      },
+      "use_cases": [
+        "Legal term definitions",
+        "US statutory references"
+      ],
+      "integration_status": "reference_only"
+    }
+  ],
+
+  "how_to_add_connector": {
+    "steps": [
+      "1. Create a Python file in src/knowledge/external/",
+      "2. Implement the connector class following the template",
+      "3. Add entry to this connectors.json file",
+      "4. Submit a PR with documentation"
+    ],
+    "template_file": "connector_template.py"
+  }
+}

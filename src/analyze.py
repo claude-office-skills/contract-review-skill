@@ -44,16 +44,27 @@ def load_jurisdiction_knowledge(jurisdiction: str, contract_type: str = "employm
     """
     Load jurisdiction-specific legal knowledge.
     
+    Searches in order:
+    1. Custom knowledge (src/knowledge/custom/)
+    2. Jurisdictions (src/knowledge/jurisdictions/)
+    
     Args:
-        jurisdiction: Country code (e.g., "us", "china", "eu")
+        jurisdiction: Country code (e.g., "us", "china", "eu") or custom path
         contract_type: Type of contract (e.g., "employment", "nda")
         
     Returns:
         dict with jurisdiction-specific knowledge
     """
+    # Check custom directory first
+    custom_path = KNOWLEDGE_DIR / "custom" / f"{jurisdiction}_{contract_type}.json"
+    if custom_path.exists():
+        return json.loads(custom_path.read_text(encoding="utf-8"))
+    
+    # Check standard jurisdictions
     knowledge_path = JURISDICTIONS_DIR / jurisdiction / f"{contract_type}.json"
     if knowledge_path.exists():
         return json.loads(knowledge_path.read_text(encoding="utf-8"))
+    
     return {}
 
 

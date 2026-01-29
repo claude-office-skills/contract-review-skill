@@ -46,6 +46,10 @@ examples/outputs/*.md
 examples/outputs/*.docx
 !examples/outputs/.gitkeep
 
+# Custom knowledge (user-specific, not committed)
+src/knowledge/custom/*.json
+!src/knowledge/custom/README.md
+
 # OS files
 .DS_Store
 Thumbs.db
