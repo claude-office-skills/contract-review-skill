@@ -41,10 +41,12 @@ env/
 *.key
 *_key.txt
 
-# Test outputs
+# Test outputs (user-generated, not committed)
 examples/outputs/*.md
 examples/outputs/*.docx
-!examples/outputs/.gitkeep
+# But keep sample files
+!examples/outputs/sample_*.md
+!examples/outputs/sample_*.json
 
 # Custom knowledge (user-specific, not committed)
 src/knowledge/custom/*.json

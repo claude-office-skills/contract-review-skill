@@ -1,0 +1,94 @@
+{
+  "contract_type": "Non-Disclosure Agreement (NDA) - Mutual",
+  "parties": {
+    "party_a": {
+      "name": "Acme Corporation",
+      "role": "Disclosing Party",
+      "address": "123 Innovation Drive, San Francisco, CA 94105"
+    },
+    "party_b": {
+      "name": "TechStart Inc.",
+      "role": "Receiving Party",
+      "address": "456 Startup Lane, Austin, TX 78701"
+    }
+  },
+  "dates": {
+    "effective_date": "2025-01-01",
+    "end_date": "2027-01-01",
+    "signing_date": "2024-12-15"
+  },
+  "financial_terms": {
+    "total_value": null,
+    "payment_terms": null,
+    "currency": null
+  },
+  "key_clauses": [
+    {
+      "name": "Definition of Confidential Information",
+      "section": "1.1",
+      "summary": "Includes all technical, business, and financial information disclosed by either party",
+      "original_text": "\"Confidential Information\" means any information disclosed by either party to the other party, directly or indirectly, in writing, orally or by inspection of tangible objects..."
+    },
+    {
+      "name": "Non-Disclosure Obligation",
+      "section": "2.1",
+      "summary": "Receiving party must protect confidential information with same degree of care as own confidential information",
+      "original_text": "The Receiving Party agrees to hold and maintain the Confidential Information in strict confidence using the same degree of care that the Receiving Party uses to protect its own confidential information..."
+    },
+    {
+      "name": "Permitted Disclosures",
+      "section": "2.2",
+      "summary": "May disclose to employees and contractors with need-to-know who are bound by confidentiality",
+      "original_text": "The Receiving Party may disclose Confidential Information only to its employees, agents, or contractors who have a need to know such information..."
+    },
+    {
+      "name": "Return of Materials",
+      "section": "4.1",
+      "summary": "Must return or destroy all confidential materials upon termination or request",
+      "original_text": "Upon termination of this Agreement or upon request by the Disclosing Party, the Receiving Party shall use reasonable efforts to return or destroy all Confidential Information..."
+    },
+    {
+      "name": "Non-Solicitation",
+      "section": "7.1",
+      "summary": "2-year restriction on soliciting employees of the other party",
+      "original_text": "During the term of this Agreement and for a period of two (2) years thereafter, neither party shall directly or indirectly solicit for employment any employee of the other party..."
+    }
+  ],
+  "obligations": {
+    "party_a": [
+      "Clearly mark confidential information as confidential",
+      "Provide written notice of any required legal disclosure",
+      "Cooperate in seeking protective orders when applicable"
+    ],
+    "party_b": [
+      "Protect confidential information with appropriate care",
+      "Limit disclosure to authorized personnel only",
+      "Return or destroy materials upon termination",
+      "Report any unauthorized disclosure immediately"
+    ]
+  },
+  "termination": {
+    "conditions": [
+      "Mutual written agreement",
+      "30 days written notice by either party",
+      "Material breach with 10-day cure period"
+    ],
+    "notice_period": "30 days",
+    "consequences": "Confidentiality obligations survive for 3 years after termination"
+  },
+  "confidentiality": {
+    "scope": "All technical, business, financial, and strategic information",
+    "duration": "3 years after termination",
+    "exceptions": [
+      "Information in public domain (not through breach)",
+      "Information already known prior to disclosure",
+      "Information independently developed",
+      "Information received from third party without restriction"
+    ]
+  },
+  "dispute_resolution": {
+    "method": "Litigation",
+    "jurisdiction": "State of Delaware",
+    "governing_law": "Laws of the State of Delaware"
+  }
+}

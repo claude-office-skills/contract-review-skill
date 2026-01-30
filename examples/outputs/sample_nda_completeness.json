@@ -1,0 +1,67 @@
+{
+  "signatures": {
+    "party_a": {
+      "present": true,
+      "location": "Page 5, bottom right, signature block for Acme Corporation",
+      "signatory": "John Smith, CEO",
+      "legible": true
+    },
+    "party_b": {
+      "present": true,
+      "location": "Page 5, bottom right, signature block for TechStart Inc.",
+      "signatory": "Jane Doe, CTO",
+      "legible": true
+    }
+  },
+  "stamps": {
+    "party_a": {
+      "present": false,
+      "clear": null,
+      "note": "Company stamp not required for US corporations"
+    },
+    "party_b": {
+      "present": false,
+      "clear": null,
+      "note": "Company stamp not required for US corporations"
+    }
+  },
+  "dates": {
+    "signing_date": {
+      "present": true,
+      "value": "2024-12-15",
+      "format_valid": true
+    },
+    "effective_date": {
+      "present": true,
+      "value": "2025-01-01",
+      "format_valid": true
+    }
+  },
+  "other": {
+    "contract_number": {
+      "present": true,
+      "value": "NDA-2024-00142"
+    },
+    "page_numbers": {
+      "present": true,
+      "complete": true,
+      "total_pages": 5,
+      "format": "Page X of 5"
+    },
+    "witness_signatures": {
+      "present": false,
+      "required": false
+    },
+    "notarization": {
+      "present": false,
+      "required": false
+    }
+  },
+  "overall_completeness": "complete",
+  "issues": [],
+  "recommendations": [
+    "Consider adding initials on each page for extra verification",
+    "Electronic signatures detected - ensure compliance with E-SIGN Act"
+  ],
+  "verification_timestamp": "2025-01-30T10:35:00Z"
+}
